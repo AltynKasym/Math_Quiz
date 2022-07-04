@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Quiz</title>
+  </head>
+  <body>
+    <section class="mainPage">
+      <div class="section">
+        <p class="mainPage__text">Hello Gamer!</p>
+        <input
+          type="text"
+          name="first_name"
+          class="mainPage__userInput"
+          placeholder="Enter your name"
+          autofocus
+        />
+        <div class="mainPage__continue">
+          <img
+            src="./images/continue.svg"
+            alt="Далее"
+            class="mainPage__continue-inner"
+          />
+        </div>
+      </div>
+
+      <div class="section">
+        <p class="mainPage__text mainPage__username"></p>
+        <p class="mainPage__text">Choose your game mode:</p>
+        <div class="mainPage__mode">
+          <button class="button mainPage__mode-button">Practice</button>
+          <button class="button mainPage__mode-button">Time attack</button>
+        </div>
+
+        <p class="mainPage__rulesText">don’t know rules? click here!</p>
+        <p class="mainPage__boardText">Leaderboard</p>
+      </div>
+
+      <section class="leaderBoard">
+        <div class="leaderBoard__inner">
+          <h2>Table of Leaders</h2>
+          <svg
+            class="leaderBoard__close"
+            width="28"
+            height="28"
+            viewBox="0 0 28 28"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2 26L26 2M2 2L26 26"
+              stroke="#eeeeee"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <ul class="leaderBoard_list"></ul>
+        </div>
+      </section>
+
+      <section class="gameBoard">
+        <div class="container">
+          <div class="gameBoard__info">
+            <p class="gameBoard__info-username">User:</p>
+            <p class="gameBoard__info-userscore">
+              Score:<span class="win">0</span>
+            </p>
+
+            <div class="gameBoard__control">
+              <svg
+                class="gameBoard-stop"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.44873 2.59147C0.44873 1.67383 1.19262 0.929932 2.11026 0.929932H13.7614C14.6791 0.929932 15.423 1.67383 15.423 2.59147V14.2426C15.423 15.1603 14.6791 15.9042 13.7614 15.9042H2.11026C1.19262 15.9042 0.44873 15.1603 0.44873 14.2426V2.59147Z"
+                  fill="#2C2C2C"
+                />
+              </svg>
+              <svg
+                class="gameBoard-back"
+                width="20"
+                height="20"
+                viewBox="0 0 21 22"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.74463 19.2422L3.74463 19.2423C3.2142 19.2423 2.70549 19.0315 2.33042 18.6565C1.95534 18.2814 1.74463 17.7727 1.74463 17.2423L1.74463 16.2423M6.74463 3.24225L3.74463 3.24225C3.21419 3.24225 2.70549 3.45296 2.33041 3.82804C1.95534 4.20311 1.74463 4.71182 1.74463 5.24225L1.74463 6.24225M13.7436 11.2422L13.7446 11.2422M6.74463 11.2422L1.74463 11.2423M1.74463 11.2423L3.74463 13.2422M1.74463 11.2423L3.74463 9.24225M18.3196 3.81425L12.3196 2.01425C12.0209 1.92459 11.7054 1.90602 11.3983 1.96002C11.0912 2.01403 10.8009 2.1391 10.5507 2.32526C10.3005 2.51142 10.0973 2.75351 9.95738 3.03218C9.81742 3.31086 9.74456 3.6184 9.74463 3.93025L9.74463 18.5542C9.74456 18.8661 9.81742 19.1736 9.95738 19.4523C10.0973 19.731 10.3005 19.9731 10.5507 20.1592C10.8009 20.3454 11.0912 20.4705 11.3983 20.5245C11.7054 20.5785 12.0209 20.5599 12.3196 20.4702L18.3196 18.6702C18.7316 18.5466 19.0927 18.2934 19.3494 17.9482C19.6061 17.6031 19.7447 17.1844 19.7446 16.7542L19.7446 5.73025C19.7447 5.30011 19.6061 4.8814 19.3494 4.53625C19.0927 4.19111 18.7316 3.93791 18.3196 3.81425Z"
+                  stroke="#2C2C2C"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <h1>Math Quiz</h1>
+
+          <main>
+            <div class="num-1">2</div>
+            <div class="operator">+</div>
+            <div class="num-2">4</div>
+            <div class="equal">=</div>
+            <input type="number" class="result" />
+          </main>
+          <div class="center">
+            <!-- <button id="go">GO</button> -->
+          </div>
+        </div>
+      </section>
+    </section>
+  </body>
+</html>
