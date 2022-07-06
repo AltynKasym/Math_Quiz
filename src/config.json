@@ -1,3 +1,10 @@
 {
-  "timer": "02:00"
+  "timer": "02:00",
+  "rules": [
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, autem.",
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, autem.",
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+    "Debitis, autem.",
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis, autem, wrgergerg wrgerg ashag asthag ferg."
+  ]
 }

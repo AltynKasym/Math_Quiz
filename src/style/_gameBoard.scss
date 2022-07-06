@@ -6,6 +6,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 70%;
+    margin: 0 auto;
   }
   &__stop {
     float: right;
@@ -44,25 +46,27 @@ main div {
   padding: 5vw;
 }
 main input {
-  border: 2px solid #000;
+  border: 2px solid #eee;
   border-radius: 8px;
   width: 14vw;
   font-size: 5vw;
   padding: 2vw;
+  background: rgba(74, 79, 85, 0.5);
+  color: #eee;
 }
-#go {
-  background-color: #5cf;
-  font-size: 5vw;
-  padding: 1vw 7vw;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-}
-#go:active {
-  transform: scale(0.99);
-}
+// #go {
+//   background-color: #5cf;
+//   font-size: 5vw;
+//   padding: 1vw 7vw;
+//   cursor: pointer;
+//   border: none;
+//   border-radius: 8px;
+// }
+// #go:active {
+//   transform: scale(0.99);
+// }
 .win {
-  font-size: 60px;
+  font-size: 40px;
   text-align: center;
 }
 h3 {

@@ -1,25 +1,28 @@
 import "./style/style.scss";
-import("./config.json");
+import "./config.json";
 
-// window.addEventListener("load", loadDB);
+// Загрузка данных из JSON
 
-// const timer = null;
+window.addEventListener("load", loadDB);
 
-// function loadDB() {
-//   fetch("config.json")
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((data) => {
-//       timer = data.timer;
-//       console.log("data.timer", data.timer);
-//     });
-// }
+let timer = "";
+let rules = [];
 
-// console.log("timer", timer);
+function loadDB() {
+  fetch("config.json")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      timer = data.timer;
+      data.rules.forEach((item) => rules.push(item));
+    });
+}
 
-const userInput = document.querySelector(".mainPage__userInput");
-const username = document.querySelector(".mainPage__username");
+// Ввод имени
+
+const userName = document.querySelector(".mainPage__username");
+const userGreet = document.querySelector(".mainPage__usergreet");
 const continues = document.querySelector(".mainPage__continue");
 const section = document.querySelectorAll(".section");
 const gameMode = document.querySelector(".mainPage__mode");
@@ -27,35 +30,27 @@ const stopGame = document.querySelector(".gameBoard-stop");
 const back = document.querySelector(".gameBoard-back");
 const mainPage = document.querySelector(".mainPage");
 
-// if (localStorage.getItem("users") == !true) {
-localStorage.setItem("users", JSON.stringify([]));
-// }
-
 continues.addEventListener("click", () => {
-  if (userInput.value.trim() !== "") {
-    let users = JSON.parse(localStorage.getItem("users"));
-    console.log("users", users);
-    users.push({ username: userInput.value, userscore: 0 });
+  if (userName.value.trim() !== "") {
     section[0].classList.add("slide");
-    username.innerText = `Welcome ${userInput.value}`;
-    localStorage.setItem("users", JSON.stringify(users));
-    // userInput.value = "";
+    userGreet.innerText = `Welcome ${userName.value}`;
   }
 });
+
+// Выбор режима
 
 let mode;
 const usernameInfo = document.querySelector(".gameBoard__info-username");
 
 gameMode.addEventListener("click", (e) => {
-  if (e.target.classList.contains("button")) {
-    mode = e.target.innerText;
-    console.log("Mode", mode);
+  if (e.target.classList.contains("mainPage__mode-game")) {
+    mode = e.target.getAttribute("data");
     section[1].classList.add("slide");
-    usernameInfo.textContent = userInput.value;
+    usernameInfo.textContent = userName.value;
   }
 });
 
-console.log(userInput.value);
+// Игра
 
 const num1 = document.querySelector(".num-1");
 const num2 = document.querySelector(".num-2");
@@ -101,19 +96,6 @@ let win = 0;
 let example = generateExample();
 renderExample(example);
 
-stopGame.addEventListener("click", () => {
-  section[0].classList.remove("slide");
-  section[1].classList.remove("slide");
-
-  win = 0;
-});
-
-back.addEventListener("click", () => {
-  section[1].classList.remove("slide");
-
-  win = 0;
-});
-
 result.addEventListener("keydown", function (e) {
   if (e.keyCode === 13) {
     if (!result.value && result.value !== 0) return;
@@ -125,16 +107,119 @@ result.addEventListener("keydown", function (e) {
   }
 });
 
-const leaderBoardButton = document.querySelector(".mainPage__boardText");
-const leaderBoard = document.querySelector(".leaderBoard");
-const leaderBoardClose = document.querySelector(".leaderBoard__close");
+// Остановка игры
 
-leaderBoardButton.addEventListener("click", showLeaderBoard);
-leaderBoardClose.addEventListener("click", closeLeaderBoard);
+stopGame.addEventListener("click", () => {
+  section[1].classList.remove("slide");
+  collectUsers();
+  win = 0;
+});
 
-function showLeaderBoard() {
-  leaderBoard.classList.add("visiable");
+back.addEventListener("click", () => {
+  section[0].classList.remove("slide");
+  section[1].classList.remove("slide");
+  collectUsers();
+  win = 0;
+});
+
+// Сбор пользователей
+
+function collectUsers() {
+  if (localStorage.getItem(`${mode}-users`) == null) {
+    localStorage.setItem(`${mode}-users`, JSON.stringify([]));
+  }
+  let users = JSON.parse(localStorage.getItem(`${mode}-users`));
+
+  // Object.keys(users);
+  // users.indexof(userName.value) >= 0 &&
+  // users.forEach((user) => {
+  //   if (userName.value === user.username && win === user.userscore) return;
+  //   else {
+  users.push({ username: userName.value, userscore: win });
+  localStorage.setItem(`${mode}-users`, JSON.stringify(users));
+  //   }
+  // });
 }
-function closeLeaderBoard() {
-  leaderBoard.classList.remove("visiable");
+
+// Открытие и заполнение модального окна
+
+const linkToWindow = document.querySelectorAll(".linkToWindow");
+const boardWindow = document.querySelector(".window");
+const windowClose = document.querySelector(".window__close");
+const windowTitle = document.querySelector(".window-title");
+const windowList = document.querySelector(".window__list");
+const boardMode = document.querySelector(".window__mode");
+const boardGameMode = document.querySelectorAll(".window__mode-item");
+
+linkToWindow.forEach((link) => {
+  link.addEventListener("click", function (e) {
+    openWindow();
+    if (e.target.getAttribute("data") === "data-rules") {
+      showRules();
+    }
+
+    if (e.target.getAttribute("data") === "data-leaderBoard") {
+      showLeaders();
+    }
+  });
+});
+
+windowClose.addEventListener("click", closeWindow);
+
+function openWindow() {
+  boardWindow.classList.add("openWindow");
+}
+function closeWindow() {
+  boardWindow.classList.remove("openWindow");
+}
+function showRules() {
+  clearWindow();
+  boardMode.classList.remove("window__mode-visiable");
+  windowTitle.textContent = "Rules of the Game";
+  rules.forEach((item) => {
+    createListInner(item);
+  });
+}
+
+function showLeaders() {
+  windowTitle.textContent = "Table of Leaders";
+  boardMode.classList.add("window__mode-visiable");
+  showModeLeaders();
+}
+
+function showModeLeaders() {
+  clearWindow();
+  boardGameMode.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      clearWindow();
+      let mode = e.target.getAttribute("data");
+      let users = JSON.parse(localStorage.getItem(`${mode}-users`));
+      users
+        .sort((a, b) => b.userscore - a.userscore)
+        .map((item) => {
+          createListInner(item);
+        });
+      // console.log(Object.keys(users));
+    });
+  });
+}
+
+function createListInner(element) {
+  const li = document.createElement("li");
+  li.setAttribute("class", "window__list-item");
+  if (typeof element === "object") {
+    li.append(`Username: ${element.username}, score ${element.userscore}`);
+  }
+  if (typeof element === "string") {
+    li.append(element);
+  }
+  windowList.append(li);
+}
+
+// Очистка окна от старых данных
+
+function clearWindow() {
+  while (windowList.firstChild) {
+    windowList.removeChild(windowList.firstChild);
+  }
 }

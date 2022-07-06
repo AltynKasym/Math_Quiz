@@ -1,14 +1,5 @@
 .mainPage {
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // width: 98vw;
-  // // height: 100vh;
-  // transform: translate(-50%, -50%);
-  // text-align: center;
-  // overflow: hidden;
-
-  &__userInput {
+  &__username {
     font-size: 20px;
     font-weight: 600;
     padding: 10px 20px;
@@ -17,9 +8,33 @@
     width: 500px;
   }
 
+  // &__text {
+  //   padding-bottom: 80px;
+  // }
   &__mode {
-    &-button {
-      margin: 30px 0 20px;
+    &-game {
+      padding: 20px 30px;
+      border: 0;
+      width: 100%;
+      height: 2em;
+      font-size: 20px;
+      text-transform: capitalize;
+      margin: 80px 20px;
+      cursor: pointer;
+      border: 2px solid darkred;
+      border-radius: 8px;
+
+      &:hover {
+        background: darkred;
+      }
+    }
+
+    input {
+      display: none;
+
+      &:checked + label {
+        background: darkred;
+      }
     }
   }
 
@@ -55,6 +70,7 @@
     line-height: 37px;
     text-decoration-line: underline;
     margin: 46px 0 20px;
+    cursor: pointer;
   }
 
   &__boardText {
@@ -64,15 +80,6 @@
     text-transform: uppercase;
     cursor: pointer;
   }
-}
-
-.button {
-  padding: 20px 0px;
-  width: 300px;
-  background: #fff;
-  font-size: 20px;
-  text-transform: capitalize;
-  margin-bottom: 30px;
 }
 
 .slide {
