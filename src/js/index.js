@@ -22,7 +22,7 @@ const userName = document.querySelector(".mainPage__username");
 const userGreet = document.querySelector(".mainPage__usergreet");
 const continues = document.querySelector(".mainPage__continue");
 const section = document.querySelectorAll(".section");
-const gameMode = document.querySelector(".mainPage__mode");
+const gameModeButton = document.querySelector(".mainPage__mode");
 const stopGameButton = document.querySelector(".gameBoard-stop");
 const back = document.querySelector(".gameBoard-back");
 const mainPage = document.querySelector(".mainPage");
@@ -36,16 +36,16 @@ continues.addEventListener("click", () => {
 
 // Выбор режима
 
-let mode;
+let gameMode;
 const usernameInfo = document.querySelector(".gameBoard__info-username");
 
-gameMode.addEventListener("click", (e) => {
+gameModeButton.addEventListener("click", (e) => {
   if (e.target.classList.contains("mainPage__mode-game")) {
-    mode = e.target.getAttribute("data");
+    gameMode = e.target.getAttribute("data");
 
     section[1].classList.add("slide");
     usernameInfo.textContent = userName.value;
-    if (mode === "time") {
+    if (gameMode === "time") {
       ShowTimer();
       startGame();
     }
@@ -183,7 +183,7 @@ stopGameButton.addEventListener("click", () => {
 
 back.addEventListener("click", () => {
   //   section[0].classList.remove("slide");
-  // section[1].classList.remove("slide");
+  section[1].classList.remove("slide");
   collectUsers();
   showScore();
   stopGame();
@@ -194,10 +194,10 @@ back.addEventListener("click", () => {
 // Сбор пользователей
 
 function collectUsers() {
-  if (localStorage.getItem(`${mode}-users`) == null) {
-    localStorage.setItem(`${mode}-users`, JSON.stringify([]));
+  if (localStorage.getItem(`${gameMode}-users`) == null) {
+    localStorage.setItem(`${gameMode}-users`, JSON.stringify([]));
   }
-  let users = JSON.parse(localStorage.getItem(`${mode}-users`));
+  let users = JSON.parse(localStorage.getItem(`${gameMode}-users`));
 
   if (users.findIndex((user) => user.username === userName.value) >= 0) {
     let userId = users.findIndex((user) => user.username === userName.value);
@@ -205,7 +205,7 @@ function collectUsers() {
 
     if (win > user.userscore) {
       users[userId] = { username: userName.value, userscore: win };
-      localStorage.setItem(`${mode}-users`, JSON.stringify(users));
+      localStorage.setItem(`${gameMode}-users`, JSON.stringify(users));
     }
     if (win <= user.userscore) {
       return;
@@ -283,6 +283,7 @@ function showLeaders() {
   windowTitle.textContent = "Table of Leaders";
   boardMode.classList.add("window__mode-visiable");
   showModeLeaders();
+  selectMode();
 }
 
 function showModeLeaders() {
@@ -290,15 +291,20 @@ function showModeLeaders() {
   boardGameMode.forEach((item) => {
     item.addEventListener("click", (e) => {
       clearWindow();
+
       let mode = e.target.getAttribute("data");
-      let users = JSON.parse(localStorage.getItem(`${mode}-users`));
-      users
-        .sort((a, b) => b.userscore - a.userscore)
-        .map((item) => {
-          createListInner(item);
-        });
+      selectMode(mode);
     });
   });
+}
+
+function selectMode(mode = gameMode ? gameMode : "practice") {
+  let users = JSON.parse(localStorage.getItem(`${mode}-users`));
+  users
+    .sort((a, b) => b.userscore - a.userscore)
+    .map((item) => {
+      createListInner(item);
+    });
 }
 
 // Заполнение окон "Правила" и "Лидерборд"
