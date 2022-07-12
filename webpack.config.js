@@ -75,6 +75,10 @@ module.exports = {
         type: "asset/resource",
       },
       {
+        test: /\.(mp3)$/i,
+        type: "asset",
+      },
+      {
         test: /\.json$/,
         type: "asset",
       },
