@@ -41,14 +41,15 @@ const usernameInfo = document.querySelector(".gameBoard__info-username");
 
 gameModeButton.addEventListener("click", (e) => {
   if (e.target.classList.contains("mainPage__mode-game")) {
+    startGame();
+    game = true;
     gameMode = e.target.getAttribute("data");
-
     section[1].classList.add("slide");
     usernameInfo.textContent = userName.value;
     if (gameMode === "time") {
       ShowTimer();
-      startGame();
-    }
+      // startGame();
+    } else boardTimer.innerText = "";
   }
 });
 
@@ -100,9 +101,7 @@ function startGame() {
       num1.textContent = data.num1;
       num2.textContent = data.num2;
       operator.textContent = data.operator;
-      //   setTimeout(() => {
-      //     exampleBoard.style = "opacity:1";
-      //   }, 5000);
+      console.log(example.result);
     };
 
     let example = generateExample();
@@ -122,16 +121,20 @@ function startGame() {
           setTimeout(() => {
             userScoreStatus.style =
               "opacity:0;color:darkgreen;margin-top:-10px;";
-          }, 1000);
+          }, 500);
         } else {
-          win--;
+          if (win <= 0) win;
+          else {
+            win--;
+          }
+
           userScoreStatus.textContent = "-1";
           userScoreStatus.style =
             "opacity:1;color:darkred;margin-bottom:-10px;";
           setTimeout(() => {
             userScoreStatus.style =
               "opacity:0;color:darkred;margin-bottom:x`0px;";
-          }, 1000);
+          }, 500);
         }
 
         userScore.textContent = win;
@@ -144,8 +147,9 @@ function startGame() {
 }
 
 function stopGame() {
+  collectUsers();
   game = false;
-  // time = 5;
+  clearInterval(time2);
 }
 function audioScore() {
   let audio = new Audio();
@@ -155,6 +159,7 @@ function audioScore() {
 
 // Таймер
 
+let time2;
 const boardTimer = document.querySelector(".gameBoard__timer");
 function ShowTimer() {
   let genTime = timer.split(":");
@@ -165,30 +170,35 @@ function ShowTimer() {
     seconds = Math.floor(time % 60);
     minutes = Math.floor((time / 60) % 60);
     boardTimer.innerText = `${minutes}: ${seconds}`;
+    if (seconds === 0 && minutes === 0) {
+      showScore();
+      clearInterval(time2);
+      // game = false;
+    }
   }
-  if (game) {
-    setInterval(() => count(), 1000);
-  } else return;
+  setTimeout(() => {
+    if (game) {
+      time2 = setInterval(() => count(), 1000);
+    }
+  }, 1000);
 }
 
 // Остановка игры
 
 stopGameButton.addEventListener("click", () => {
   section[1].classList.remove("slide");
-  collectUsers();
+
   stopGame();
   game = false;
-  win = 0;
 });
 
 back.addEventListener("click", () => {
   //   section[0].classList.remove("slide");
-  section[1].classList.remove("slide");
-  collectUsers();
+  // section[1].classList.remove("slide");
+
   showScore();
   stopGame();
   game = false;
-  win = 0;
 });
 
 // Сбор пользователей
@@ -212,7 +222,7 @@ function collectUsers() {
     }
   } else {
     users.push({ username: userName.value, userscore: win });
-    localStorage.setItem(`${mode}-users`, JSON.stringify(users));
+    localStorage.setItem(`${gameMode}-users`, JSON.stringify(users));
   }
 }
 
@@ -249,6 +259,7 @@ function closeWindow() {
 }
 
 // Показать правила
+
 function showRules() {
   clearWindow();
   boardMode.classList.remove("window__mode-visiable");
@@ -261,6 +272,9 @@ function showRules() {
 // Показать очки
 
 function showScore() {
+  // section[1].classList.remove("slide");
+  // clearInterval(time2);
+  // game = false;
   openWindow();
   clearWindow();
   boardMode.classList.remove("window__mode-visiable");
@@ -269,11 +283,21 @@ function showScore() {
   const lid = document.createElement("p");
   lid.setAttribute("class", "linkToWindow");
   lid.textContent = "LEADERBOARD";
-  windowList.append(lid);
+
+  const playAgain = document.createElement("p");
+  playAgain.textContent = "Play Again";
+  windowList.append(lid, playAgain);
 
   lid.addEventListener("click", () => {
     showLeaders();
     section[1].classList.remove("slide");
+  });
+
+  playAgain.addEventListener("click", () => {
+    closeWindow();
+    startGame();
+    ShowTimer();
+    // game = true;
   });
 }
 
