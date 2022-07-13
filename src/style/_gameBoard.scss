@@ -5,9 +5,31 @@
   &__info {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 70%;
     margin: 0 auto;
+
+    &-userscore {
+      display: flex;
+      &-incorrect {
+        animation: moveScore 1s;
+      }
+
+      @keyframes moveScore {
+        10% {
+          transform: translateX(5px);
+        }
+        20% {
+          transform: translateX(-5px);
+        }
+        40% {
+          transform: translateX(3px);
+        }
+        60% {
+          transform: translateX(-3px);
+        }
+      }
+    }
   }
   &__stop {
     float: right;
@@ -58,9 +80,47 @@ h1 {
   font-size: 40px;
   text-align: center;
 }
-.userscore-status {
+.userscore__status {
   opacity: 0;
-  transition: all 0.3s;
+  // transition: all 0.3s;
+
+  &-correct {
+    opacity: 1;
+    color: darkgreen;
+    animation: scoreUp 1.7s;
+  }
+
+  &-incorrect {
+    opacity: 1;
+    color: darkred;
+    animation: scoreDown 1.7s;
+  }
+
+  @keyframes scoreUp {
+    0% {
+      transform: translateY(0px);
+    }
+    80% {
+      transform: translateY(-15px);
+    }
+    100% {
+      transform: translateY(-15px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes scoreDown {
+    0% {
+      transform: translateY(0px);
+    }
+    80% {
+      transform: translateY(15px);
+    }
+    100% {
+      transform: translateY(15px);
+      opacity: 0;
+    }
+  }
 }
 h3 {
   margin-top: 30px;

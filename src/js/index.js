@@ -61,7 +61,7 @@ const operator = document.querySelector(".operator");
 const result = document.querySelector(".result");
 const userScore = document.querySelector(".userscore");
 const boardUserScore = document.querySelector(".gameBoard__info-userscore");
-const userScoreStatus = document.querySelector(".userscore-status");
+const userScoreStatus = document.querySelector(".userscore__status");
 const exampleBoard = document.querySelector(".example-board");
 let win = 0;
 
@@ -69,6 +69,7 @@ let game = true;
 function startGame() {
   if (!game) return false;
   else {
+    // ShowTimer();
     const getRandom = (min, max) => {
       return Math.round(Math.random() * (max - min) + min);
     };
@@ -102,6 +103,7 @@ function startGame() {
       num2.textContent = data.num2;
       operator.textContent = data.operator;
       console.log(example.result);
+      exampleBoard.style.transition = "0.5s";
     };
 
     let example = generateExample();
@@ -117,11 +119,10 @@ function startGame() {
           win++;
           // audioScore();
           userScoreStatus.textContent = "+1";
-          userScoreStatus.style = "opacity:1;color:darkgreen;";
+          userScoreStatus.classList.add("userscore__status-correct");
           setTimeout(() => {
-            userScoreStatus.style =
-              "opacity:0;color:darkgreen;margin-top:-10px;";
-          }, 500);
+            userScoreStatus.classList.remove("userscore__status-correct");
+          }, 1500);
         } else {
           if (win <= 0) win;
           else {
@@ -129,12 +130,14 @@ function startGame() {
           }
 
           userScoreStatus.textContent = "-1";
-          userScoreStatus.style =
-            "opacity:1;color:darkred;margin-bottom:-10px;";
+          boardUserScore.classList.add("gameBoard__info-userscore-incorrect");
+          userScoreStatus.classList.add("userscore__status-incorrect");
           setTimeout(() => {
-            userScoreStatus.style =
-              "opacity:0;color:darkred;margin-bottom:x`0px;";
-          }, 500);
+            boardUserScore.classList.remove(
+              "gameBoard__info-userscore-incorrect"
+            );
+            userScoreStatus.classList.remove("userscore__status-incorrect");
+          }, 1500);
         }
 
         userScore.textContent = win;
@@ -148,8 +151,9 @@ function startGame() {
 
 function stopGame() {
   collectUsers();
-  game = false;
+  // game = false;
   clearInterval(time2);
+  win = 0;
 }
 function audioScore() {
   let audio = new Audio();
@@ -172,7 +176,8 @@ function ShowTimer() {
     boardTimer.innerText = `${minutes}: ${seconds}`;
     if (seconds === 0 && minutes === 0) {
       showScore();
-      clearInterval(time2);
+      stopGame();
+      // clearInterval(time2);
       // game = false;
     }
   }
