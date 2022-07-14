@@ -1,26 +1,30 @@
 .window {
   width: 100%;
-  height: 100%;
+  height: min-content;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   bottom: -100vh;
   transition: all 0.3s;
   color: #eeeeee;
-  // background: rgba(69, 86, 125, 0.3);
+
+  &-title {
+    font-size: 30px;
+  }
 
   &__inner {
     width: 70vw;
-    height: 80vh;
+    height: fit-content;
     margin: 5% auto;
     border-radius: 20px;
-    background-color: rgba(186, 7, 29, 0.9);
+    background-color: #1e1e1e;
+    border: 3px solid rgba(186, 7, 29, 0.9);
     padding: 30px;
   }
 
   &__close {
     float: right;
-    margin: -40px 20px 0;
+    margin: -60px 0px 0;
     cursor: pointer;
   }
 
@@ -28,14 +32,24 @@
     list-style: none;
     text-align: left;
     padding-left: 30px;
+
     &-item {
       font-size: 15px;
       line-height: 30px;
+    }
+
+    &-statistic {
+      width: 50%;
+      margin-bottom: 130px;
+      display: flex;
+      justify-content: space-around;
+      margin: 0 auto;
     }
   }
 
   &__mode {
     display: none;
+    font-size: 27px;
 
     &-visiable {
       display: flex;
@@ -44,17 +58,40 @@
     &-item {
       display: block;
     }
+
+    &-label {
+      display: block;
+      padding: 3px 30px;
+      margin: 5px 10px 20px;
+      border-radius: 20px;
+      border: 2px solid rgb(186, 7, 29);
+    }
   }
   input {
     display: none;
 
     &:checked + label {
-      background: orange;
+      background: rgba(186, 7, 29, 0.9);
+    }
+  }
+
+  &__button {
+    display: inline-block;
+    padding: 3px 30px;
+    margin: 5px 10px 20px;
+    border-radius: 20px;
+    border: 2px solid rgb(186, 7, 29);
+
+    &:hover {
+      color: rgb(243, 34, 59);
     }
   }
 }
 
 .openWindow {
-  bottom: 0;
+  bottom: 100px;
   transition: all 0.3s;
+}
+
+@media screen and (max-width: 800px) {
 }
