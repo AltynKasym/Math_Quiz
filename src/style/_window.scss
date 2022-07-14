@@ -7,20 +7,27 @@
   bottom: -100vh;
   transition: all 0.3s;
   color: #eeeeee;
-  // background: rgba(69, 86, 125, 0.3);
+  font-size: 20px;
+
+  &-title {
+    font-size: 30px;
+  }
 
   &__inner {
+    position: relative;
     width: 70vw;
-    height: 80vh;
+    height: fit-content;
     margin: 5% auto;
     border-radius: 20px;
-    background-color: rgba(186, 7, 29, 0.9);
+    background-color: #1e1e1e;
+    border: 3px solid rgba(186, 7, 29, 0.9);
     padding: 30px;
   }
 
   &__close {
-    float: right;
-    margin: -40px 20px 0;
+    position: absolute;
+    top: 20px;
+    right: 25px;
     cursor: pointer;
   }
 
@@ -28,33 +35,80 @@
     list-style: none;
     text-align: left;
     padding-left: 30px;
+
     &-item {
       font-size: 15px;
       line-height: 30px;
+    }
+
+    &-statistic {
+      width: 50%;
+      margin-bottom: 130px;
+      display: flex;
+      justify-content: space-around;
+      margin: 0 auto;
     }
   }
 
   &__mode {
     display: none;
+    font-size: 27px;
+    margin: 15px 0;
 
     &-visiable {
       display: flex;
+      justify-content: center;
     }
 
     &-item {
       display: block;
+    }
+
+    &-label {
+      display: block;
+      padding: 10px 30px;
+      margin: 5px 10px 20px;
+      border-radius: 20px;
+      border: 2px solid rgb(186, 7, 29);
+      font-size: 20px;
     }
   }
   input {
     display: none;
 
     &:checked + label {
-      background: orange;
+      background: rgba(186, 7, 29, 0.9);
+    }
+  }
+
+  &__button {
+    display: inline-block;
+    padding: 3px 30px;
+    margin: 5px 10px 20px;
+    border-radius: 20px;
+    border: 2px solid rgb(186, 7, 29);
+
+    &:hover {
+      color: rgb(243, 34, 59);
     }
   }
 }
 
 .openWindow {
-  bottom: 0;
+  bottom: 5vh;
   transition: all 0.3s;
+}
+
+@media screen and (max-width: 800px) {
+  .window {
+    &__mode {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &-label {
+        width: 80%;
+      }
+    }
+  }
 }

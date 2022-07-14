@@ -24,13 +24,12 @@ const continues = document.querySelector(".mainPage__continue");
 const section = document.querySelectorAll(".section");
 const gameModeButton = document.querySelector(".mainPage__mode");
 const stopGameButton = document.querySelector(".gameBoard-stop");
-const back = document.querySelector(".gameBoard-back");
 const mainPage = document.querySelector(".mainPage");
 
 continues.addEventListener("click", () => {
   if (userName.value.trim() !== "") {
     section[0].classList.add("slide");
-    userGreet.textContent = `Welcome ${userName.value}`;
+    userGreet.textContent = ` ${userName.value}`;
   }
 });
 
@@ -49,7 +48,7 @@ gameModeButton.addEventListener("click", (e) => {
     if (gameMode === "time") {
       ShowTimer();
       // startGame();
-    } else boardTimer.innerText = "";
+    } else boardTimer.style.display = "none";
   }
 });
 
@@ -63,9 +62,13 @@ const userScore = document.querySelector(".userscore");
 const boardUserScore = document.querySelector(".gameBoard__info-userscore");
 const userScoreStatus = document.querySelector(".userscore__status");
 const exampleBoard = document.querySelector(".example-board");
+const boardDivs = document.querySelectorAll(".example-board *");
+console.log(boardDivs);
 let win = 0;
 
 let game = true;
+let correct = 0;
+let incorrect = 0;
 function startGame() {
   if (!game) return false;
   else {
@@ -103,7 +106,11 @@ function startGame() {
       num2.textContent = data.num2;
       operator.textContent = data.operator;
       console.log(example.result);
-      exampleBoard.style.transition = "0.5s";
+
+      exampleBoard.classList.add("move");
+      setTimeout(() => {
+        exampleBoard.classList.remove("move");
+      }, 1000);
     };
 
     let example = generateExample();
@@ -115,8 +122,15 @@ function startGame() {
       if (e.keyCode === 13) {
         if (!result.value && result.value !== 0) return;
 
+        exampleBoard.classList.add("moveLeft");
+
+        setTimeout(() => {
+          exampleBoard.classList.remove("moveLeft");
+        }, 1000);
+
         if (Number(result.value) === Number(example.result)) {
           win++;
+          correct++;
           // audioScore();
           userScoreStatus.textContent = "+1";
           userScoreStatus.classList.add("userscore__status-correct");
@@ -127,6 +141,7 @@ function startGame() {
           if (win <= 0) win;
           else {
             win--;
+            incorrect++;
           }
 
           userScoreStatus.textContent = "-1";
@@ -143,7 +158,9 @@ function startGame() {
         userScore.textContent = win;
         result.value = "";
         example = generateExample();
-        renderExample(example);
+        setTimeout(() => {
+          renderExample(example);
+        }, 1000);
       }
     });
   }
@@ -191,20 +208,21 @@ function ShowTimer() {
 // Остановка игры
 
 stopGameButton.addEventListener("click", () => {
-  section[1].classList.remove("slide");
-
-  stopGame();
-  game = false;
-});
-
-back.addEventListener("click", () => {
   //   section[0].classList.remove("slide");
   // section[1].classList.remove("slide");
-
   showScore();
   stopGame();
   game = false;
 });
+
+// back.addEventListener("click", () => {
+//   //   section[0].classList.remove("slide");
+//   // section[1].classList.remove("slide");
+
+//   showScore();
+//   stopGame();
+//   game = false;
+// });
 
 // Сбор пользователей
 
@@ -283,15 +301,27 @@ function showScore() {
   openWindow();
   clearWindow();
   boardMode.classList.remove("window__mode-visiable");
-  windowTitle.textContent = "Your score:";
-  createListInner(win);
+  windowTitle.textContent = `Your score: ${win}`;
+  // createListInner(win);
   const lid = document.createElement("p");
-  lid.setAttribute("class", "linkToWindow");
+  lid.setAttribute("class", "linkToWindow window__button");
   lid.textContent = "LEADERBOARD";
+
+  const div = document.createElement("div");
+  div.setAttribute("class", "window__list-statistic");
+  const correctText = document.createElement("p");
+  const incorrectText = document.createElement("p");
+
+  correctText.textContent = `Correct: ${correct} `;
+  incorrectText.textContent = ` Incorrect: ${incorrect}`;
 
   const playAgain = document.createElement("p");
   playAgain.textContent = "Play Again";
-  windowList.append(lid, playAgain);
+  playAgain.setAttribute("class", "window__button");
+
+  div.append(correctText, incorrectText);
+  windowList.append(div, lid, playAgain);
+  windowList.style = "text-align:center";
 
   lid.addEventListener("click", () => {
     showLeaders();
