@@ -13,7 +13,7 @@ module.exports = {
   },
   output: {
     filename: "[name].[contenthash].js",
-    assetModuleFilename: "images/[name][ext][query]",
+    assetModuleFilename: "assets/[name][ext][query]",
     clean: true,
   },
   devServer: {
@@ -76,11 +76,11 @@ module.exports = {
       },
       {
         test: /\.(mp3)$/i,
-        type: "asset",
+        type: "asset/resource",
       },
       {
         test: /\.json$/,
-        type: "asset",
+        type: "asset/resource",
       },
       {
         test: /\.m?js$/,
