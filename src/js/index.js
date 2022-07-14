@@ -101,7 +101,7 @@ function startGame() {
       return { num1, num2, operator, result };
     };
 
-    exampleBoard.style.display = "flex";
+    // exampleBoard.style.display = "flex";
     const renderExample = (data) => {
       num1.textContent = data.num1;
       num2.textContent = data.num2;
