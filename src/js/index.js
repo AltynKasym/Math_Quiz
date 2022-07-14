@@ -6,7 +6,7 @@ let timer = "";
 let rules = [];
 
 function loadDB() {
-  fetch("config.json")
+  fetch("./assets/config.json")
     .then((response) => {
       return response.json();
     })
@@ -46,6 +46,7 @@ gameModeButton.addEventListener("click", (e) => {
     section[1].classList.add("slide");
     usernameInfo.textContent = userName.value;
     if (gameMode === "time") {
+      boardTimer.style.display = "block";
       ShowTimer();
       // startGame();
     } else boardTimer.style.display = "none";
@@ -63,7 +64,7 @@ const boardUserScore = document.querySelector(".gameBoard__info-userscore");
 const userScoreStatus = document.querySelector(".userscore__status");
 const exampleBoard = document.querySelector(".example-board");
 const boardDivs = document.querySelectorAll(".example-board *");
-console.log(boardDivs);
+
 let win = 0;
 
 let game = true;
@@ -100,12 +101,11 @@ function startGame() {
       return { num1, num2, operator, result };
     };
 
-    exampleBoard.style.display = "flex";
+    // exampleBoard.style.display = "flex";
     const renderExample = (data) => {
       num1.textContent = data.num1;
       num2.textContent = data.num2;
       operator.textContent = data.operator;
-      console.log(example.result);
 
       exampleBoard.classList.add("move");
       setTimeout(() => {
@@ -141,9 +141,8 @@ function startGame() {
           if (win <= 0) win;
           else {
             win--;
-            incorrect++;
           }
-
+          incorrect++;
           userScoreStatus.textContent = "-1";
           boardUserScore.classList.add("gameBoard__info-userscore-incorrect");
           userScoreStatus.classList.add("userscore__status-incorrect");
@@ -212,6 +211,8 @@ stopGameButton.addEventListener("click", () => {
   // section[1].classList.remove("slide");
   showScore();
   stopGame();
+  correct = 0;
+  incorrect = 0;
   game = false;
 });
 
@@ -295,11 +296,9 @@ function showRules() {
 // Показать очки
 
 function showScore() {
-  // section[1].classList.remove("slide");
-  // clearInterval(time2);
-  // game = false;
   openWindow();
   clearWindow();
+
   boardMode.classList.remove("window__mode-visiable");
   windowTitle.textContent = `Your score: ${win}`;
   // createListInner(win);
@@ -315,25 +314,29 @@ function showScore() {
   correctText.textContent = `Correct: ${correct} `;
   incorrectText.textContent = ` Incorrect: ${incorrect}`;
 
-  const playAgain = document.createElement("p");
-  playAgain.textContent = "Play Again";
-  playAgain.setAttribute("class", "window__button");
+  // const playAgain = document.createElement("p");
+  // playAgain.textContent = "Play Again";
+  // playAgain.setAttribute("class", "window__button");
 
   div.append(correctText, incorrectText);
-  windowList.append(div, lid, playAgain);
+  windowList.append(div, lid);
   windowList.style = "text-align:center";
+
+  windowClose.addEventListener("click", () => {
+    section[1].classList.remove("slide");
+  });
 
   lid.addEventListener("click", () => {
     showLeaders();
     section[1].classList.remove("slide");
   });
 
-  playAgain.addEventListener("click", () => {
-    closeWindow();
-    startGame();
-    ShowTimer();
-    // game = true;
-  });
+  // playAgain.addEventListener("click", () => {
+  //   closeWindow();
+  //   startGame();
+  //   ShowTimer();
+  //   // game = true;
+  // });
 }
 
 // Показать таблицу лидеров

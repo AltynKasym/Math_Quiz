@@ -4,8 +4,9 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s;
-  height: 100vh;
+  min-height: 100vh;
   padding-top: 50px;
+  overflow: hidden;
 
   &__info {
     display: flex;
@@ -74,11 +75,11 @@ h1 {
   display: inline-block;
 }
 .example-board {
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 1vw;
-  transition: all 1s;
+  // transition: all 1s;
   margin-top: 5vw;
 }
 .example-board div {
@@ -100,23 +101,21 @@ h1 {
 }
 
 .move {
-  // margin-left: 100vw;
-  transition: all 1s;
   animation: move 1s;
 }
 
 @keyframes move {
   0% {
+    display: none;
     transform: translateX(100vw);
   }
   100% {
+    display: block;
     transform: translateX(0);
   }
 }
 
 .moveLeft {
-  transition: all 1s;
-  // margin-right: 100vw;
   animation: moveLeft 1s;
 }
 
@@ -124,12 +123,10 @@ h1 {
   0% {
     transform: translateX(0);
   }
-  90% {
-    transform: translateX(-100vw);
-    display: none;
-  }
   100% {
-    transform: translateX(200vw);
+    display: none;
+    transform: translateX(-100vw);
+    // display: none;
   }
 }
 

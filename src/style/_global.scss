@@ -44,6 +44,11 @@ body {
   margin: auto auto;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 @media screen and (max-width: 900px) {
   .container {
     width: 100%;

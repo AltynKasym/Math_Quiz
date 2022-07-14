@@ -34,7 +34,7 @@
   &__list {
     list-style: none;
     text-align: left;
-    padding-left: 30px;
+    // padding-left: 30px;
 
     &-item {
       font-size: 15px;
@@ -42,11 +42,11 @@
     }
 
     &-statistic {
-      width: 50%;
-      margin-bottom: 130px;
+      width: 70%;
+      // margin-bottom: 130px;
       display: flex;
       justify-content: space-around;
-      margin: 0 auto;
+      margin: 30px auto;
     }
   }
 
@@ -110,5 +110,26 @@
         width: 80%;
       }
     }
+    &-title {
+      font-size: 20px;
+    }
+
+    &__list-statistic {
+      width: 90%;
+      // margin-bottom: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      margin: 30px auto;
+    }
+    &__inner {
+      padding: 60px 10px 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .linkToWindow {
+    font-size: 14px;
   }
 }
